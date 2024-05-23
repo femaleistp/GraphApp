@@ -9,6 +9,7 @@ var b = graph.AddVertex("B");
 var c = graph.AddVertex("C");
 
 a.AddEdge(b, 5).AddEdge(c, 2);
-b.AddEdge(c, 100);
+b.AddEdge(c, 1);
 
-Console.ReadLine();
+
+graph.PrintMatrix();
