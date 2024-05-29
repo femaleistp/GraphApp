@@ -111,10 +111,12 @@ namespace GraphLib
                         )
                     {
                         dist[v] = dist[u] + graph[u, v]
-                    }
+                    };
                 }
             }
         }
+
+
 
         private int MinDistance(int[] dist, bool[] visits)
         {
