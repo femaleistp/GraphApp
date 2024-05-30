@@ -15,10 +15,10 @@ namespace GraphLib
             return v;
         }
 
-        public int?[,] CreateAdjMatrix()
+        public int[,] CreateAdjMatrix()
         {
             // make a 2d array to represent all vertices
-            int?[,] AdjMatrix = new int?[Vertices.Count,Vertices.Count];
+            int[,] AdjMatrix = new int[Vertices.Count,Vertices.Count];
 
             for (int i = 0; i < Vertices.Count; i++)
             {
@@ -71,14 +71,17 @@ namespace GraphLib
             }
         }
 
-        public void Dijkstra(int[,] graph, int src)
+        public void Dijkstra(int src)
         {
+
+            int[,] graph = CreateAdjMatrix();
+
             // set up some buckets to store our info
             int[] dist = new int[Vertices.Count];
             bool[] visits = new bool[Vertices.Count];
 
             // initialize the arrays
-            for (int i= 0; i < Vertices.Count; i++)
+            for (int i = 0; i < Vertices.Count; i++)
             {
                 dist[i] = int.MaxValue;
                 visits[i] = false;
@@ -86,7 +89,7 @@ namespace GraphLib
 
             dist[src] = 0;
 
-            for(int count =0; count < Vertices.Count -1; count++)
+            for (int count = 0; count < Vertices.Count - 1; count++)
             {
                 // pick minimum distance vertex from the set of vertices not yet processed
                 int u = MinDistance(dist, visits);
@@ -104,19 +107,27 @@ namespace GraphLib
                        the total weight of the path from src to v through the picked node (u) is smaller than the current value of dist[v]
                      */
 
-                    if (!visits[v] && 
-                        graph[u,v] != 0 &&
-                        dist[u] != int.MaxValue &&
-                        dist[u] + graph[u,v] < dist[v]
-                        )
+                    if (!visits[v] && graph[u, v] != 0 && dist[u] != int.MaxValue && dist[u] + graph[u, v] < dist[v])
                     {
-                        dist[v] = dist[u] + graph[u, v]
+                        dist[v] = dist[u] + graph[u, v];
                     };
                 }
             }
+            PrintSolution(dist, Vertices.Count);
         }
 
+        public void PrintSolution(int[] dist, int count)
+        {
+            Console.WriteLine("Vertex\t\tDistance from source");
 
+            for(int i=0; i<Vertices.Count();i++)
+            {
+                Console.WriteLine($"{Vertices[i].Label}\t\t{dist[i]}");
+
+            }
+
+
+        }
 
         private int MinDistance(int[] dist, bool[] visits)
         {
